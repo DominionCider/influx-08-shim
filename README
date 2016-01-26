@@ -1,0 +1,19 @@
+A tiny proxying web server that stands in front of InfluxDB 0.9. It intercepts
+requests that were deprecated after version 0.8, and translates them into
+modern requests. It proxies all other requests directly.
+
+I had embedded devices sending data in the old format. By running this proxy,
+I can continue to receive their data until I can upgrade their firmware to
+use InfluxDB's new "Line Format".
+
+WARNING: Not for production use without reviewing this code and modifying
+it to suit your needs. I had to hard code a couple column names that
+required manual type conversion.
+
+Usage:
+ * Put InfluxDB's HTTP server on another port (like 8886)
+ * Run this on port 8086
+
+   ex:
+
+       /opt/influx-08-shim -bind ':8086' -server 'localhost:8886'
